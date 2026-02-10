@@ -1,22 +1,12 @@
-# Kurze Zusammenfassung für das Debian-Paket
-summary = "Ein Tool, das hallo sagt"
+bin = true
 
-# Ausführliche Beschreibung (wird in 'apt show' angezeigt)
+[packages.bin]
+section = "utils"
+summary = "Syslog-Server Project in Rust"
 description = """
-Dieses Paket bietet eine beispielhafte CLI-Anwendung, 
-die zeigt, wie man Rust-Crates sauber für Debian paketiert.
-Es nutzt Clap für das Argument-Parsing.
+A small automation project to set up a syslog server, which also serves as a playground for Rust.
 """
 
-# Falls du eine binäre Anwendung (Executable) paketierst:
-[bin]
-# Hiermit wird das Paket 'hello-debian' statt 'librust-hello-debian-dev' genannt
-name = "hello-debian"
-
-# Sektion für das Debian-Archiv (z.B. utils, rust, admin)
-section = "utils"
-
-# Hier kannst du Abhängigkeiten korrigieren, falls nötig
+# Falls du auch eine Library-Version (für andere Devs) veröffentlichst:
 [packages.lib]
-# Falls die Library-Version für andere Entwickler bereitstehen soll
-summary = "Rust-Library für hello-debian"
+section = "rust"

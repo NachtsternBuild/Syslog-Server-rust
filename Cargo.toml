@@ -1,16 +1,16 @@
 [package]
-name = "myapp"
+name = "syslog-server"
 version = "0.1.0"
-authors = ["Dein Name <mail@example.com>"]
+authors = ["Elias Mörz <elias.moerz@mail.de>"]
 edition = "2024"
 
-description = "Fast and minimal CLI tool for XYZ"
+description = "A small automation project to set up a syslog server, which also serves as a playground for Rust."
 readme = "README.md"
 
-homepage = "https://github.com/deinuser/myapp"
-repository = "https://github.com/deinuser/myapp"
+homepage = "https://github.com/NachtsternBuild/Syslog-Server"
+repository = "https://github.com/NachtsternBuild/Syslog-Server"
 
-license = "Apache-2.0"
+license = "GPL-3.0"
 
 keywords = ["cli", "tool"]
 categories = ["command-line-utilities"]
@@ -22,19 +22,19 @@ include = [
 ]
 
 [[bin]]
-name = "myapp"
+name = "syslog-server"
 path = "src/main.rs"
 
 [dependencies]
 
-# CLI parsing → Debian hat clap paketiert
+# cli parsing
 clap = { version = "4.5", features = ["derive"] }
 
-# Logging
+# logging
 log = "0.4"
 env_logger = "0.11"
 
-# Bessere Fehler
+# better errors
 anyhow = "1.0"
 
 [features]
@@ -43,7 +43,7 @@ default = ["cli"]
 
 cli = []
 
-# Beispiel für optionales Feature
+# example opt features
 json = ["serde", "serde_json"]
 
 [dependencies.serde]
@@ -56,8 +56,8 @@ version = "1.0"
 optional = true
 
 [profile.release]
-opt-level = "z"     # Optimiert auf die kleinstmögliche Dateigröße
-lto = true          # Link Time Optimization (entfernt ungenutzten Code über Crates hinweg)
-codegen-units = 1   # Verhindert paralleles Kompilieren, ermöglicht aber bessere Optimierung
-panic = "abort"     # Entfernt den Code für Stack-Unwinding (spart viel Platz)
+opt-level = "z"     # Optimized for the smallest possible file size
+lto = true          # Link Time Optimization (removes unused code across crates)
+codegen-units = 1   # Prevents parallel compilation, but enables better optimization
+panic = "abort"     # Removes the code for stack unwinding (saves a lot of space)
 strip = true
