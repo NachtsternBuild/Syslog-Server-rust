@@ -1,10 +1,59 @@
 [package]
-name = "syslog-server"
+name = "myapp"
 version = "0.1.0"
+authors = ["Dein Name <mail@example.com>"]
 edition = "2024"
-authors = ["Elias Mörz <dein.name@example.com>"]
-description = "Ein einfaches Beispiel-Tool für Debian"
+
+description = "Fast and minimal CLI tool for XYZ"
+readme = "README.md"
+
+homepage = "https://github.com/deinuser/myapp"
+repository = "https://github.com/deinuser/myapp"
+
 license = "Apache-2.0"
+
+keywords = ["cli", "tool"]
+categories = ["command-line-utilities"]
+
+include = [
+    "src/**",
+    "LICENSE*",
+    "README.md"
+]
+
+[[bin]]
+name = "myapp"
+path = "src/main.rs"
+
+[dependencies]
+
+# CLI parsing → Debian hat clap paketiert
+clap = { version = "4.5", features = ["derive"] }
+
+# Logging
+log = "0.4"
+env_logger = "0.11"
+
+# Bessere Fehler
+anyhow = "1.0"
+
+[features]
+
+default = ["cli"]
+
+cli = []
+
+# Beispiel für optionales Feature
+json = ["serde", "serde_json"]
+
+[dependencies.serde]
+version = "1.0"
+optional = true
+features = ["derive"]
+
+[dependencies.serde_json]
+version = "1.0"
+optional = true
 
 [profile.release]
 opt-level = "z"     # Optimiert auf die kleinstmögliche Dateigröße
@@ -12,7 +61,3 @@ lto = true          # Link Time Optimization (entfernt ungenutzten Code über Cr
 codegen-units = 1   # Verhindert paralleles Kompilieren, ermöglicht aber bessere Optimierung
 panic = "abort"     # Entfernt den Code für Stack-Unwinding (spart viel Platz)
 strip = true
-
-[dependencies]
-clap = { version = "4.0", features = ["derive"] }
-serde = { version = "1.0", features = ["derive"] }
