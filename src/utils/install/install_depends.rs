@@ -1,8 +1,8 @@
 use crate::helper::run_command::run_cmd;
 use crate::helper::timer::timer;
-use crate::helper::system_helper::refresh_system;
-use crate::helper::config_desktop::config_desktop;
-use crate::helper::system_helper::config_boot;
+use crate::helper::system::system_helper::refresh_system;
+use crate::helper::config::config_desktop::config_desktop;
+use crate::helper::config::config_boot::config_boot;
 
 // Installiert die notwendigen Pakete und optionale Desktopumgebung
 pub fn install_depends(with_desktop: bool) {

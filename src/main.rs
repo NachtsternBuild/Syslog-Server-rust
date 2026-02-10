@@ -5,26 +5,30 @@ mod utils;
 
 use crate::helper::run_command::run_cmd;
 use crate::helper::timer::timer;
-use crate::helper::system_helper::refresh_system;
-use crate::helper::system_helper::cleanup;
+use crate::helper::system::system_helper::refresh_system;
+use crate::helper::system::system_helper::cleanup;
 use crate::utils::menu::config_server::config_server;
 use crate::utils::menu::desktop_install_menu::desktop_install_menu;
 use crate::utils::menu::get_rsyslog_config::get_rsyslog_config;
 use crate::utils::menu::firewall_menu::firewall_menu;
-use crate::helper::system_helper::status_syslog_tools;
+use crate::helper::system::system_helper::status_syslog_tools;
 use crate::utils::menu::change_boot_menu::change_boot_menu;
 
 fn main() {
 	loop {
 		println!("\nWas soll gemacht werden?");
-		println!("------------------------------------");
-        println!("(u) Updates und Upgrades");
+		println!("-------------------------------------");
+        println!("(k) Server konfigurieren"); // TODO
+        println!("(l) Client Konfiguration ausgeben"); // TODO
+        println!("-------------------------------------");
+		println!("(u) Updates und Upgrades");
         println!("(c) Nach Updates Aufräumen");
         println!("(n) Neustarten");
         println!("(a) Abmelden");
+        println!("(i) Kommandoübersicht"); // TODO
         println!("-------------------------------------");
-        println!("(k) Server konfigurieren");
         println!("(d) Desktop hinzu installieren");
+        println!("(t) Zusätzliche Log Tools"); // TODO
         println!("(r) Neue Rsyslog Config nutzen");
         println!("(f) Firewall-Modus ändern");
         println!("(s) Status von System Tools ausgeben");
@@ -41,14 +45,10 @@ fn main() {
         
         // switch/case 
         match choice.as_str() {
+        	"k" => config_server(), // TODO → Server Konfigurieren
+        	"l" => config_server(), // TODO → client Konfiguration Ausgeben → Datei/Konsole
         	"u" => refresh_system(),
         	"c" => cleanup(),
-        	"k" => config_server(),
-        	"d" => desktop_install_menu(),
-        	"r" => get_rsyslog_config(),
-        	"f" => firewall_menu(),
-        	"s" => status_syslog_tools(),
-        	"b" => change_boot_menu(),
         	"n" => {
         		timer(15);
         		run_cmd("sudo", &["reboot"]);
@@ -58,6 +58,13 @@ fn main() {
         		let args: &[&str] = &[]; // Expliziter Typ hilft dem Compiler
         		run_cmd("logout", args);
         	}
+        	"i" => config_server(), // TODO → Basic Kommandos ausgeben
+        	"d" => desktop_install_menu(),
+        	"t" => config_server(), // TODO → Log Tools vorbereiten
+        	"r" => get_rsyslog_config(),
+        	"f" => firewall_menu(),
+        	"s" => status_syslog_tools(),
+        	"b" => change_boot_menu(),
         	"v" => break, // schleife beenden
         	_ => {
         		println!("[ERROR] Unbekannte Eingabe!");

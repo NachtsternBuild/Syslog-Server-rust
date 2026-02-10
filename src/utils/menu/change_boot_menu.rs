@@ -1,5 +1,5 @@
 use std::io::{self}; // Für Terminal IO
-use crate::helper::system_helper::config_boot;
+use crate::helper::config::config_boot::config_boot;
 
 pub fn change_boot_menu() {
 	println!("[?] Grafisch booten? (j/n): ");

@@ -9,9 +9,14 @@ pub fn get_rsyslog_config() {
 	io::stdin().read_line(&mut path).unwrap();
 	let path = path.trim();
 	
+	if path.is_empty() {
+		println!("[INFO] Vorgang abgebrochen. Keine Änderung vorgenommen.");
+		return;
+	}
+	
 	if fs::metadata(path).is_ok() {
 		if run_cmd("sudo", &["mv", path, "/etc/rsyslog.conf"]) {
-			println!("[OK] Konfiguration akualisiert.");
+			println!("[OK] Konfiguration aktualisiert.");
 		}
 	}
 	else {
