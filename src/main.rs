@@ -13,6 +13,8 @@ use crate::utils::menu::get_rsyslog_config::get_rsyslog_config;
 use crate::utils::menu::firewall_menu::firewall_menu;
 use crate::helper::system::system_helper::status_syslog_tools;
 use crate::utils::menu::change_boot_menu::change_boot_menu;
+use crate::helper::system::basic_commands::basic_commands;
+use crate::utils::menu::add_log_tools::add_log_tools;
 
 fn main() {
 	loop {
@@ -58,9 +60,9 @@ fn main() {
         		let args: &[&str] = &[]; // Expliziter Typ hilft dem Compiler
         		run_cmd("logout", args);
         	}
-        	"i" => config_server(), // TODO → Basic Kommandos ausgeben
+        	"i" => basic_commands(), 
         	"d" => desktop_install_menu(),
-        	"t" => config_server(), // TODO → Log Tools vorbereiten
+        	"t" => add_log_tools(), 
         	"r" => get_rsyslog_config(),
         	"f" => firewall_menu(),
         	"s" => status_syslog_tools(),
