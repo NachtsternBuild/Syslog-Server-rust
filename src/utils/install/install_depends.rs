@@ -1,4 +1,4 @@
-use std::io::{self, Write}; // Für Terminal IO
+use std::io::{self}; // Für Terminal IO
 use crate::helper::run_command::run_cmd;
 use crate::helper::timer::timer;
 use crate::helper::system::system_helper::refresh_system;
@@ -23,7 +23,7 @@ pub fn install_depends(with_desktop: bool) {
 	println!("[?] System jetzt neustarten? (j/n)");
 	let mut ans = String::new();
 	io::stdin().read_line(&mut ans).unwrap();
-	if ans.trim().to_lowercase().unwrap() == "j" {
+	if ans.trim().to_lowercase() == "j" {
 		println!("[INFO] System wird heruntergefahren...");
 		timer(15);
 		run_cmd("sudo", &["reboot"]);

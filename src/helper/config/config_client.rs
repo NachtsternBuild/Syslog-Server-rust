@@ -1,11 +1,10 @@
-use std::io::{self, Write}; // Für Terminal IO
-use std::error::Error;
+use std::io::{self}; // Für Terminal IO
 use crate::helper::write_file::write_file;
 use crate::helper::system::server_ip::server_ip;
 use crate::helper::run_command::run_cmd;
 
 pub fn config_client() {
-	let content = r#"# /etc/rsyslog.conf configuration file for rsyslog
+	let mut content = r#"# /etc/rsyslog.conf configuration file for rsyslog
 #
 # For more information install rsyslog-doc and see
 # /usr/share/doc/rsyslog-doc/html/configuration/index.html
@@ -82,13 +81,13 @@ user.*					-/var/log/user.log
 
 	match server_ip() {
 		Ok(ip) => {
-			content.push_str("\n*.* @@{}:514", ip);
+			content.push_str(&format!("\n*.* @@{}:514", ip));
 			println!("[?] Soll die Rsyslog Client Konfiguration direkt angwendet werden? (j/n)");
 			let mut ans = String::new();
 			io::stdin().read_line(&mut ans).unwrap();
 			
-			if ans.trim().to_lowercase().unwrap() == "j" {
-				let create_file = write_file("rsyslog.conf", content, &["client-config"]);
+			if ans.trim().to_lowercase() == "j" {
+				let create_file = write_file("rsyslog.conf", &content, &["client-config"]); // FIXME: erstellen in /etc nicht ~/client-config
 				match create_file {
 					Ok(p) => println!("[OK] Datei erstellt unter: {:?}", p),
 					Err(e) => eprintln!("[ERROR] Fehler: {}", e),
@@ -100,7 +99,7 @@ user.*					-/var/log/user.log
 				println!("{}", content);
 			}			
 		}
-		Err(e) => {
+		Err(_e) => {
 			eprintln!("[ERROR] Ein Fehler ist aufgetreten und wir sind uns nicht sicher wo dieser liegt.");
 			std::process::exit(1);
 		}

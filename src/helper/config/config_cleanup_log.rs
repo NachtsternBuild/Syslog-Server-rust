@@ -1,4 +1,4 @@
-use std::io::{self, Write}; // Für Terminal IO
+use std::io::{self}; // Für Terminal IO
 use crate::helper::system::script_permission::script_permission;
 use crate::helper::system::move_file::move_file;
 use crate::helper::system::create_cronjob::create_cronjob;
@@ -34,7 +34,7 @@ echo \"[INFO] All log files in $datei that are older than 90 days habe been dele
 	let mut path_dir = String::new();
 	io::stdin().read_line(&mut path_dir).unwrap();
 	let path_dir = path_dir.trim();
-	let target_path = "/usr/local/share/logging/directory.conf"
+	let target_path = "/usr/local/share/logging/directory.conf";
 	
 	// Datei an die Stelle verschieben
 	move_file(path_dir, target_path);
@@ -92,7 +92,7 @@ echo "[INFO] All log files in $datei directory have been deleted!""#;
 	let mut path_dir = String::new();
 	io::stdin().read_line(&mut path_dir).unwrap();
 	let path_dir = path_dir.trim();
-	let target_path = "/usr/local/share/logging/directory.conf"
+	let target_path = "/usr/local/share/logging/directory.conf";
 	
 	// Datei an die Stelle verschieben
 	move_file(path_dir, target_path);

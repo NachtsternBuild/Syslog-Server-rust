@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 pub fn create_path(filename: &str, path_list: &[&str]) -> std::io::Result<PathBuf> {
 	let user_dirs = UserDirs::new()
-		.ok_or_else(|| std::io::ErrorKind::notFound, "[ERROR] Home Verzichnis nicht gefunden"))?;
+		.ok_or_else(|| std::io::ErrorKind::NotFound)?;
 	
 	let mut full_path = PathBuf::from(user_dirs.home_dir());
 	

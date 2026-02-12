@@ -1,11 +1,10 @@
 use directories::UserDirs;
 use std::fs;
 use std::path::PathBuf;
-use std::io::Write;
 
-pub fn write_file(filename: &str, content: &str, path_list: &[&str])-> std::io::Result<()> {
+pub fn write_file(filename: &str, content: &str, path_list: &[&str]) -> std::io::Result<()> {
 	let user_dirs = UserDirs::new()
-		.ok_or_else(|| std::io::ErrorKind::notFound, "[ERROR] Home Verzichnis nicht gefunden"))?;
+		.ok_or_else(|| std::io::ErrorKind::NotFound)?;
 	
 	let mut full_path = PathBuf::from(user_dirs.home_dir());
 	
@@ -20,5 +19,5 @@ pub fn write_file(filename: &str, content: &str, path_list: &[&str])-> std::io::
 	
 	fs::write(&full_path, content)?;
 	
-	Ok(full_path)
+	Ok(())
 }

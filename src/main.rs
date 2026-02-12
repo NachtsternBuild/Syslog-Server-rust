@@ -5,30 +5,33 @@ mod utils;
 
 use crate::{
 	helper::{
-		run_command::run_cmd;
-		timer::timer;
-		config::config_client::config_client;
+		run_command::run_cmd,
+		timer::timer,
+		config::config_client::config_client,
 		system::{
-			basic_commands::basic_commands;	
+			basic_commands::basic_commands,
 			system_helper::{
-				refresh_system;
-				cleanup;
-				status_syslog_tools;
-			}	
-		}
-	}
+				refresh_system,
+				cleanup,
+				status_syslog_tools,
+			},	
+		},
+	},
 	utils::{
 		menu::{
-			config_server::config_server;
-			desktop_install_menu::desktop_install_menu;
-			get_rsyslog_config::get_rsyslog_config;
-			firewall_menu::firewall_menu;
-			change_boot_menu::change_boot_menu;
-			add_log_tools::add_log_tools;
-		}
-	}
-}
-	
+			config_server::config_server,
+			desktop_install_menu::desktop_install_menu,
+			get_rsyslog_config::get_rsyslog_config,
+			firewall_menu::firewall_menu,
+			change_boot_menu::change_boot_menu,
+			add_log_tools::add_log_tools,
+		},
+	},
+};
+
+
+// TODO: sudo weglassen → Programm muss mit root-rechten gestartet werden
+// TODO: Kommentare hinzufügen	
 fn main() {
 	loop {
 		println!("\nWas soll gemacht werden?");

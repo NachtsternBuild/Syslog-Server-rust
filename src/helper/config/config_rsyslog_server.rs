@@ -1,6 +1,4 @@
-use std::error::Error;
 use crate::helper::write_file::write_file;
-use crate::helper::system::server_ip::server_ip;
 use crate::helper::run_command::run_cmd;
 
 pub fn config_rsyslog_server() {
@@ -79,7 +77,7 @@ $IncludeConfig /etc/rsyslog.d/*.conf
 *.* ?RemoteLogs
 & stop"#.to_string();
 
-	let create_file = write_file("rsyslog.conf", content, &["etc"]); // FIXME: to /etc not to ~/etc
+	let create_file = write_file("rsyslog.conf", &content, &["etc"]); // FIXME: to /etc not to ~/etc
 	match create_file {
 		Ok(p) => println!("[OK] Datei erstellt unter: {:?}", p),
 		Err(e) => eprintln!("[ERROR] Fehler: {}", e),	
