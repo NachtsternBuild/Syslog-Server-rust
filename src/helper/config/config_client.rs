@@ -2,7 +2,7 @@ use std::error::Error;
 use crate::helper::write_file::write_file;
 use crate::helper::system::server_ip::server_ip;
 
-pub fn config_rsyslog_server() {
+pub fn config_client() {
 	let content = r#"# /etc/rsyslog.conf configuration file for rsyslog
 #
 # For more information install rsyslog-doc and see

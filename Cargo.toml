@@ -26,7 +26,10 @@ name = "syslog-server"
 path = "src/main.rs"
 
 [dependencies]
-
+# ip address settings
+local_ip_address = "0.6"
+# working with directories
+directories = "6.0"
 # cli parsing
 clap = { version = "4.5", features = ["derive"] }
 
