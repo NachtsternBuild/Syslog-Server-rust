@@ -1,8 +1,24 @@
-use std::fs; // Für Dateisystem-Operationen 
-use std::io::{self, Write}; // Für Terminal IO
+use crate::{
+	utils::menu::{
+		desktop_install_menu::desktop_install_menu;
+		add_log_tools::add_log_tools;
+		change_boot_menu::change_boot_menu;
+		firewall_menu::firewall_menu;
+	}
+	helper::config::{
+		config_desktop::config_desktop;
+		config_rsyslog_server::config_rsyslog_server;
+		config_client::config_client;
+	}
+}
+	
 
 pub fn config_server() {
-	// TODO: andere Skripte verbinden
-	println!("[?] ");
-
+	desktop_install_menu();
+	add_log_tools();
+	config_desktop();
+	change_boot_menu();
+	firewall_menu();
+	config_rsyslog_server();
+	config_client();
 }

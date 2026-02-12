@@ -1,6 +1,7 @@
 use std::error::Error;
 use crate::helper::write_file::write_file;
 use crate::helper::system::server_ip::server_ip;
+use crate::helper::run_command::run_cmd;
 
 pub fn config_rsyslog_server() {
 	let content = r#"# /etc/rsyslog.conf configuration file for rsyslog
@@ -21,8 +22,8 @@ module(load="imuxsock") # provides support for local system logging
 #input(type="imudp" port="514")
 
 # provides TCP syslog reception
-#module(load="imtcp")
-#input(type="imtcp" port="514")
+module(load="imtcp")
+input(type="imtcp" port="514")
 
 # provides kernel logging support and enable non-kernel klog messages
 module(load="imklog" permitnonkernelfacility="on")
@@ -50,24 +51,39 @@ $PrivDropToGroup syslog
 #
 $WorkDirectory /var/spool/rsyslog
 
+########################
+#### REMOTE LOGGING ####
+########################
+# Allowed senders - later
+#$AllowedSender TCP, IP-Addresses
+
+# Do not recevie logs with a priority higher then 4
+if ($syslogpriority > 4) then {
+	stop
+}
+
+# Template for remote logs
+#$template RemoteLogs,"/var/log/remote/%HOSTNAME%/%fromhost-ip%/%PROGRAMNAME%.log
+$template RemoteLogs,"/var/log/remote/%HOSTNAME%/%PROGRAMNAME%.log
+
+####################################
+#### INCLUDE ADDITIONAL CONFIGS ####
+####################################
 #
 # Include all config files in /etc/rsyslog.d/
 #
-$IncludeConfig /etc/rsyslog.d/*.conf"#.to_string();
+$IncludeConfig /etc/rsyslog.d/*.conf
 
-	match server_ip() {
-		Ok(ip) => {
-			content.push_str("\n*.* @@{}:514", ip);
-			let create_file = write_file("rsyslog.conf", content, &["client-config"]);
-			match create_file {
-				Ok(p) => println!("[OK] Datei erstellt unter: {:?}", p),
-				Err(e) => eprintln!("[ERROR] Fehler: {}", e),
-			}		
-			println!("{}", content);			
-		}
-		Err(e) => {
-			eprintln!("[ERROR] Ein Fehler ist aufgetreten und wir sind uns nicht sicher wo dieser liegt.");
-			std::process::exit(1);
-		}
+# Write all remote logs using the template
+# Add at the end, otherwise no further configurations will be applied
+*.* ?RemoteLogs
+& stop"#.to_string();
+
+	let create_file = write_file("rsyslog.conf", content, &["etc"]); // FIXME: to /etc not to ~/etc
+	match create_file {
+		Ok(p) => println!("[OK] Datei erstellt unter: {:?}", p),
+		Err(e) => eprintln!("[ERROR] Fehler: {}", e),	
 	}
+	run_cmd("sudo", &["systemctl", "restart", "rsyslog"]);
 }
+	

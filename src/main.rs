@@ -33,7 +33,7 @@ fn main() {
 	loop {
 		println!("\nWas soll gemacht werden?");
 		println!("-------------------------------------");
-        println!("(k) Server konfigurieren"); // TODO
+        println!("(k) Server konfigurieren"); 
         println!("(l) Client Konfiguration ausgeben"); 
         println!("-------------------------------------");
 		println!("(u) Updates und Upgrades");
@@ -60,7 +60,7 @@ fn main() {
         
         // switch/case 
         match choice.as_str() {
-        	"k" => config_server(), // TODO → Server Konfigurieren
+        	"k" => config_server(),
         	"l" => config_client(), 
         	"u" => refresh_system(),
         	"c" => cleanup(),
