@@ -35,12 +35,14 @@ echo \"[INFO] All log files in $datei that are older than 90 days habe been dele
 	let mut path_dir = String::new();
 	io::stdin().read_line(&mut path_dir).unwrap();
 	let path_dir = path_dir.trim();
-	let target_path = "/usr/local/share/logging/directory.conf"; // FIXME
+	let target_path = "/usr/local/share/logging/directory.conf";
 	
 	// move file
 	move_file(path_dir, target_path);
+	
 	// create cronjob
-	create_cronjob(path); // FIXME: Zeit mit übergeben 
+	let cron = "0 2 * *";
+	create_cronjob(cron, path); 
 }
 
 // script that clean the logs
@@ -94,10 +96,12 @@ echo "[INFO] All log files in $datei directory have been deleted!""#;
 	let mut path_dir = String::new();
 	io::stdin().read_line(&mut path_dir).unwrap();
 	let path_dir = path_dir.trim();
-	let target_path = "/usr/local/share/logging/directory.conf"; // FIXME
+	let target_path = "/usr/local/share/logging/directory.conf";
 	
 	// move file
 	move_file(path_dir, target_path);
+	
 	// create cronjob
-	create_cronjob(path); // FIXME
+	let cron = "0 1 * *";
+	create_cronjob(cron, path);
 }

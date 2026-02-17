@@ -14,6 +14,7 @@ use crate::{
 				refresh_system,
 				cleanup,
 				status_syslog_tools,
+				ensure_root,
 			},	
 		},
 	},
@@ -29,28 +30,21 @@ use crate::{
 	},
 };
 
-// function to check if programm run as root
-fn ensure_root() {
-	if unsafe { libc::geteuid() } != 0 {
-		eprintln!("[ERROR] Dieses Programm benötigt Root-Rechte.");
-        eprintln!("[INFO] Starte es mit sudo oder verwende den Client.");
-        std::process::exit(1);
-    }
-}
-
 // main
-// TODO: sudo weglassen → Programm muss mit root-rechten gestartet werden
-// TODO: Kommentare hinzufügen
 // TODO: systemd service einrichten bei login status rsyslogd auszuzeigen
-// TODO: write_file überall nutzen
-// TODO: cronjob anpassungen zeit
+// TODO: Windows Client konfiguration
+// TODO: Docs
+
 fn main() {
 	ensure_root(); // active at release
 	loop {
 		println!("\nWas soll gemacht werden?");
 		println!("-------------------------------------");
-        println!("(k) Server konfigurieren"); 
-        println!("(l) Client Konfiguration ausgeben"); 
+        println!("(k) Server konfigurieren"); // TODO
+        println!("(o) Client Konfiguration ausgeben"); 
+        println!("-------------------------------------");
+		println!("(w) Windows Client konfigurieren"); // TODO
+		println!("(l) Linux Client konfigurieren"); // TODO
         println!("-------------------------------------");
 		println!("(u) Updates und Upgrades");
         println!("(c) Nach Updates Aufräumen");
@@ -58,6 +52,7 @@ fn main() {
         println!("(i) Kommandoübersicht"); 
         println!("-------------------------------------");
         println!("(d) Desktop hinzu installieren");
+        println!("(p) Rsyslog Übersicht beim Login"); // TODO
         println!("(t) Zusätzliche Log Tools"); 
         println!("(r) Neue Rsyslog Config nutzen");
         println!("(f) Firewall-Modus ändern");
@@ -77,7 +72,9 @@ fn main() {
         // switch/case 
         match choice.as_str() {
         	"k" => config_server(),
-        	"l" => config_client(), 
+        	"o" => config_client(), 
+        	"w" => cleanup(), // TODO
+        	"l" => cleanup(), // TODO
         	"u" => refresh_system(),
         	"c" => cleanup(),
         	"n" => {
@@ -87,6 +84,7 @@ fn main() {
         	}
         	"i" => basic_commands(), 
         	"d" => desktop_install_menu(),
+        	"p" => cleanup(), // TODO
         	"t" => add_log_tools(), 
         	"r" => get_rsyslog_config(),
         	"f" => firewall_menu(),

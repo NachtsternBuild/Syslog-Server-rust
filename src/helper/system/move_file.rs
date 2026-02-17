@@ -13,7 +13,7 @@ pub fn move_file(path: &str, target_path: &str) {
 		panic!("[ERROR] Vorgang abgebrochen. Der Zielpfad ist Leer.");
 	}
 	
-	// Elternpfad prüfen
+	// check parent path
 	create_parent_dir(target_path);
 	
 	if fs::metadata(path).is_ok() {
