@@ -34,20 +34,16 @@ directories = "6.0"
 clap = { version = "4.5", features = ["derive"] }
 # libc
 libc = "0.2"
-
 # logging
 log = "0.4"
 env_logger = "0.11"
-
 # better errors
 anyhow = "1.0"
 
 [features]
 
 default = ["cli"]
-
 cli = []
-
 # example opt features
 json = ["serde", "serde_json"]
 
@@ -71,7 +67,7 @@ strip = true
 [package.metadata.deb]
 maintainer = "Elias Mörz <elias.moerz@mail.de>"
 copyright = "2026, Elias Mörz <elias.moerz@mail.de>"
-license-file = ["LICENSE", "0"] # Pfad zur Lizenz und Priorität
+license-file = ["LICENSE", "0"] # path to license and prio
 depends = "$auto"
 section = "utils"
 priority = "optional"

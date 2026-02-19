@@ -64,7 +64,7 @@ fn main() {
         println!("(v) Verlassen/Beenden");
 		
 		// Show "Eingabe" now
-        print!("\nEingabe: ");
+        print!("\n[?] Eingabe: ");
         io::stdout().flush().unwrap(); 
         
         let mut input = String::new(); 
